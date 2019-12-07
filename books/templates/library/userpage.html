@@ -1,0 +1,11 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div>
+	<form enctype="multipart/form-data" action="{% url 'library:userpage' username %}" method="post">
+		{% csrf_token %}
+		<input type="file" name="img">
+		<input type="submit" name="ok">
+	</form>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "library/base.html" %}
+{% load staticfiles %}
+{% block title %}查看图书{% endblock %}
+
+
+
+{% block content %}
+
+    {% if state == 'success' %}
+        <div class="col-md-4 col-md-offset-4">
+            <div class="alert alert-warning">
+                <h2>收藏成功</h2>
+            </div>
+        </div>
+    {% endif %}
+
+
+    <div class="container myContainer">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-5">
+                    <div class="img-rounded">
+                      <img src="/media/{{ book.cover }}" alt="{{ book.title }}">
+                    </div>
+                    <br><br><br>
+                    <div class="col-md-5">
+                        {% if state == 'no_collected' %}
+                            <button class="btn btn-primary btn-lg"
+                                    onclick="location.href='?ISBN={{ book.ISBN }}&action=collect';">收藏
+                            </button>
+                        {% elif state == 'collected' or state == 'success' %}
+                            <button class="btn btn-primary btn-lg disabled">
+                            已收藏
+                            </button>
+                        {% elif state == 'no_user' %}
+                            <a class="btn btn-primary btn-lg" href="/library/login/">
+                                收藏
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6 col-md-offset-1">
+                    <h2 class="text-center">{{ book.title }}</h2>
+                    <br>
+                    <h4>ISBN：{{ book.ISBN }}</h4>
+                    <h4>作者：{{ book.author }}</h4>
+                    <h4>出版社:{{ book.press }}</h4>
+                    <h4>类别：{{ book.category }}</h4>
+                    <h4>价格：{{ book.price|floatformat:2 }}</h4>
+                    <hr>
+                    <p>简介:</p>
+                    <P>{{ book.description }}</p>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
